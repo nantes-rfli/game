@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="420" viewBox="0 0 320 420">
+  <rect x="18" y="18" width="284" height="384" rx="18" fill="#fdf3e2" stroke="#b98f55" stroke-width="6"/>
+  <rect x="44" y="58" width="232" height="70" rx="12" fill="#ead6bd"/>
+  <g font-family="Arial, sans-serif" font-size="24" fill="#7a3520" font-weight="700">
+    <text x="72" y="104">MAKE A CODE</text>
+  </g>
+  <rect x="44" y="152" width="232" height="180" rx="12" fill="#f0dcc5"/>
+  <circle cx="98" cy="220" r="18" fill="#4a79c2"/>
+  <circle cx="160" cy="220" r="18" fill="#c4452f"/>
+  <circle cx="222" cy="220" r="18" fill="#e0c24f"/>
+  <circle cx="92" cy="264" r="4" fill="#7a3520"/>
+  <circle cx="104" cy="264" r="4" fill="#7a3520"/>
+  <circle cx="160" cy="264" r="4" fill="#7a3520"/>
+  <circle cx="214" cy="264" r="4" fill="#7a3520"/>
+  <circle cx="226" cy="264" r="4" fill="#7a3520"/>
+  <circle cx="238" cy="264" r="4" fill="#7a3520"/>
+  <rect x="44" y="350" width="232" height="30" rx="10" fill="#ead6bd"/>
+  <g font-family="Arial, sans-serif" font-size="18" fill="#7a3520" font-weight="700">
+    <text x="92" y="371">COUNT THE MARKS</text>
+  </g>
+</svg>

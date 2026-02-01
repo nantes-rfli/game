@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Escape Hub</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <p class="note">Escape Hub</p>
+        <h1>脱出への一歩</h1>
+        <p>短時間で遊べる脱出ゲームのアーカイブ。気になるシーンへ飛び込もう。</p>
+      </section>
+
+      <ul class="games">
+        <li>
+          <a class="game-card" data-game="room" href="/escape/1/">
+            <div class="game-inner">
+              <div class="game-visual" aria-hidden="true">
+                <img class="game-thumb" src="1/assets/safe-closed.svg" alt="ワンルーム脱出のサムネイル" />
+              </div>
+              <div class="game-content">
+                <p class="game-title">ワンルーム脱出（#1）</p>
+                <p class="game-desc">身近な部屋に隠された小さな違和感を追って、最後の鍵を探す。</p>
+                <div class="game-meta">
+                  <span>所要: 5-7分</span>
+                  <span>難易度: Easy</span>
+                </div>
+                <div class="play"><span>▶</span> Start</div>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="game-card" data-game="train" href="/escape/2/">
+            <div class="game-inner">
+              <div class="game-visual" aria-hidden="true">
+                <img class="game-thumb" src="2/assets/window.svg" alt="電車内脱出のサムネイル" />
+              </div>
+              <div class="game-content">
+                <p class="game-title">電車内脱出（#2）</p>
+                <p class="game-desc">静かな車内に残された手がかりを繋ぎ、閉ざされた扉を開く。</p>
+                <div class="game-meta">
+                  <span>所要: 6-8分</span>
+                  <span>難易度: Normal</span>
+                </div>
+                <div class="play"><span>▶</span> Start</div>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="game-card" data-game="library" href="/escape/3/">
+            <div class="game-inner">
+              <div class="game-visual" aria-hidden="true">
+                <img class="game-thumb" src="3/assets/north.png" alt="図書室脱出のサムネイル" />
+              </div>
+              <div class="game-content">
+                <p class="game-title">図書室脱出（#3）</p>
+                <p class="game-desc">静かな書架の間で手がかりを集め、出口を開く。</p>
+                <div class="game-meta">
+                  <span>所要: 6-8分</span>
+                  <span>難易度: Normal</span>
+                </div>
+                <div class="play"><span>▶</span> Start</div>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </main>
+    <script>
+      document.querySelectorAll(".game-card").forEach((card) => {
+        card.addEventListener("mousemove", (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          gsap.to(card, {
+            rotationY: -1 * ((x - rect.width / 2) / rect.width) * 20,
+            rotationX: ((y - rect.height / 2) / rect.height) * 20,
+            ease: "power2.out",
+            duration: 0.5,
+          });
+        });
+
+        card.addEventListener("mouseleave", () => {
+          gsap.to(card, {
+            rotationY: 0,
+            rotationX: 0,
+            ease: "power2.out",
+            duration: 0.8,
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

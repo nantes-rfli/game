@@ -1,0 +1,358 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Shippori+Mincho:wght@500;600&family=Space+Grotesk:wght@400;600&family=Tenor+Sans&display=swap");
+
+:root {
+  --ink: #1b1f26;
+  --muted: rgba(27, 31, 38, 0.6);
+  --panel: #ffffff;
+  --bg: #eef1f6;
+  --accent: #ff6a4a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  padding: 20px 18px 28px;
+}
+
+.tool {
+  width: min(1080px, 100%);
+  margin: 0 auto;
+  display: grid;
+  gap: 18px;
+}
+
+.tool-header {
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 16px 18px;
+  display: grid;
+  gap: 14px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  letter-spacing: 0.2em;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 1.6rem;
+}
+
+.lead {
+  margin: 0;
+  color: var(--muted);
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.controls label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.controls select,
+.controls button {
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  background: #fff;
+}
+
+.controls button {
+  cursor: pointer;
+}
+
+.stage-wrap {
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+}
+
+.stage {
+  width: 100%;
+  aspect-ratio: var(--stage-ratio, 3 / 2);
+  background-color: #f5f6f8;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: none;
+  pointer-events: none;
+}
+
+.overlay img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.marker {
+  position: absolute;
+  display: none;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  user-select: none;
+}
+
+.stage.show-marker .marker {
+  display: block;
+}
+
+.marker:active {
+  cursor: grabbing;
+}
+
+.marker-text {
+  display: flex;
+  gap: 12px;
+  justify-content: space-evenly;
+  align-items: center;
+  font-family: "Fraunces", "Yu Mincho", serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: #4a3628;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.marker-text.size-sm {
+  font-size: 1.1rem;
+}
+
+.marker-text.size-md {
+  font-size: 1.4rem;
+}
+
+.marker-text.size-lg {
+  font-size: 1.8rem;
+}
+
+.marker-text.font-fraunces {
+  font-family: "Fraunces", "Yu Mincho", serif;
+}
+
+.marker-text.font-shippori {
+  font-family: "Shippori Mincho", "Yu Mincho", serif;
+}
+
+.marker-text.font-tenor {
+  font-family: "Tenor Sans", "Space Grotesk", sans-serif;
+}
+
+.marker-text.color-ink {
+  color: #2b2f35;
+}
+
+.marker-text.color-sepia {
+  color: #4a3628;
+}
+
+.marker-text.color-gold {
+  color: #a2672f;
+}
+
+.marker-text.color-blue {
+  color: #2f4e73;
+}
+
+.marker-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.marker-controls button {
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  background: #fff;
+  cursor: pointer;
+}
+
+.output-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.output-controls label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.output-controls select {
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  background: #fff;
+}
+
+#style-output,
+#crop-output {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  padding: 8px 10px;
+  font: inherit;
+  margin-bottom: 8px;
+}
+
+.crop-controls {
+  display: none;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.crop-controls label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.crop-controls input[type="range"] {
+  accent-color: var(--accent);
+}
+
+.crop-controls button {
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  background: #fff;
+  cursor: pointer;
+}
+
+.grid-controls {
+  display: none;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.grid-controls button {
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font: inherit;
+  background: #fff;
+  cursor: pointer;
+}
+
+#grid-output {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  padding: 8px 10px;
+  font: inherit;
+  margin-bottom: 8px;
+}
+
+.grid-box {
+  position: absolute;
+  border: 2px dashed rgba(255, 106, 74, 0.8);
+  background: rgba(255, 106, 74, 0.08);
+  border-radius: 10px;
+  display: none;
+}
+
+.grid-box.show {
+  display: block;
+}
+
+.grid-handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid rgba(255, 106, 74, 0.9);
+  cursor: pointer;
+}
+
+.grid-handle.br {
+  right: -7px;
+  bottom: -7px;
+}
+
+.selection {
+  position: absolute;
+  border: 2px solid var(--accent);
+  background: rgba(255, 106, 74, 0.18);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.point-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 106, 74, 0.9);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
+  pointer-events: none;
+}
+
+.output {
+  background: var(--panel);
+  border-radius: 18px;
+  padding: 16px 18px;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+}
+
+.output h2 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+#output {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(27, 31, 38, 0.2);
+  padding: 10px;
+  font: inherit;
+  min-height: 120px;
+}
+
+.hint {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}

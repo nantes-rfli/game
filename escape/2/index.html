@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>電車内脱出</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scene">
+      <header class="title">
+        <p class="subtitle">Train Escape</p>
+        <h1>電車内脱出</h1>
+        <p class="tagline">車内に残された手がかりを集め、扉を開く。</p>
+        <div class="difficulty">
+          <label for="difficulty-select">Difficulty</label>
+          <select id="difficulty-select">
+            <option value="easy">Easy</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </header>
+
+      <main class="room" aria-label="車内">
+        <div class="walls" id="walls">
+          <div class="wall is-active" data-wall="0" aria-label="北の壁">
+            <button class="object window" type="button" data-object="window" aria-label="窓を調べる">
+              <span class="label">WINDOW</span>
+            </button>
+            <button class="object reflection" type="button" data-object="reflection" aria-label="反射ガラスを調べる">
+              <span class="label">REFLECTION</span>
+            </button>
+          </div>
+          <div class="wall" data-wall="1" aria-label="東の壁">
+            <button class="object ad" type="button" data-object="ad" aria-label="吊り広告を調べる">
+              <span class="label">AD</span>
+            </button>
+            <button class="object monitor" type="button" data-object="monitor" aria-label="車内モニターを調べる">
+              <span class="label">MONITOR</span>
+            </button>
+          </div>
+          <div class="wall" data-wall="2" aria-label="南の壁">
+            <button class="object seat" type="button" data-object="seat" aria-label="座席を調べる">
+              <span class="label">SEAT</span>
+            </button>
+            <button class="object priority" type="button" data-object="priority" aria-label="優先席ピクトを調べる">
+              <span class="label">PRIORITY</span>
+            </button>
+          </div>
+          <div class="wall" data-wall="3" aria-label="西の壁">
+            <button class="object door" type="button" data-object="door" aria-label="ドアを調べる">
+              <span class="label">DOOR</span>
+              <span class="status" id="door-status">LOCKED</span>
+            </button>
+          </div>
+        </div>
+        <div class="floor" aria-hidden="true"></div>
+        <div class="nav" aria-label="視点移動">
+          <button class="nav-btn" type="button" data-dir="prev">◀ 左を見る</button>
+          <div class="compass" aria-live="polite">
+            <span class="compass-label">View</span>
+            <span class="compass-face" id="compass">N</span>
+            <span class="compass-note" id="compass-note">未調査あり</span>
+          </div>
+          <button class="nav-btn" type="button" data-dir="next">右を見る ▶</button>
+        </div>
+      </main>
+
+      <section class="panels" aria-label="情報パネル">
+        <div class="inventory" aria-label="インベントリ">
+          <h2>Inventory</h2>
+          <div class="items" id="inventory-items">
+            <button class="item" data-item="ticket" aria-hidden="true">整理券</button>
+            <button class="item" data-item="mirror" aria-hidden="true">反射カード</button>
+          </div>
+          <p class="inventory-empty" id="inventory-empty">No items</p>
+        </div>
+
+        <div class="hints" aria-label="ヒント一覧">
+          <h2>Hints</h2>
+          <ul id="hint-list"></ul>
+        </div>
+
+        <div class="log" aria-label="ログ">
+          <h2>Log</h2>
+          <ul id="log-list"></ul>
+        </div>
+      </section>
+
+      <div class="modal" id="match-modal" role="dialog" aria-modal="true" aria-labelledby="match-title" hidden>
+        <div class="modal-card match-card">
+          <h2 id="match-title">吊り広告のマッチ棒</h2>
+          <p>1本動かして図形を2つの窓に。</p>
+          <div class="match-area" id="match-area">
+            <button class="match-stick top" data-stick="top" aria-label="上の棒"></button>
+            <button class="match-stick bottom" data-stick="bottom" aria-label="下の棒"></button>
+            <button class="match-stick left" data-stick="left" aria-label="左の棒"></button>
+            <button class="match-stick right" data-stick="right" aria-label="右の棒"></button>
+            <button class="match-stick extra" data-stick="extra" aria-label="外側の棒"></button>
+          </div>
+          <p class="match-result" id="match-result">まだ動かせていない。</p>
+          <div class="modal-actions">
+            <button type="button" class="primary" id="match-close">閉じる</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="door-modal" role="dialog" aria-modal="true" aria-labelledby="door-title" hidden>
+        <div class="modal-card">
+          <h2 id="door-title">車内ドア</h2>
+          <p>3桁の暗号を入力してください。</p>
+          <form id="door-form" novalidate>
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="3"
+              placeholder="000"
+              aria-label="3桁の暗号"
+              id="door-input"
+              required
+            />
+            <div class="modal-actions">
+              <button type="submit" class="primary">開ける</button>
+              <button type="button" class="ghost" id="door-cancel">閉じる</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="seat-modal" role="dialog" aria-modal="true" aria-labelledby="seat-title" hidden>
+        <div class="modal-card">
+          <h2 id="seat-title">座席裏の図形</h2>
+          <div class="shape-preview" aria-hidden="true">
+            <svg class="shape-svg pos-a" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="22" fill="#f7efe5" stroke="#5b3b2a" stroke-width="4" />
+            </svg>
+            <div class="shape-missing pos-b" aria-hidden="true"></div>
+            <svg class="shape-svg pos-c" viewBox="0 0 64 64" aria-hidden="true">
+              <rect x="14" y="14" width="36" height="36" rx="6" fill="#f7efe5" stroke="#5b3b2a" stroke-width="4" />
+            </svg>
+            <svg class="shape-svg pos-b shape-fill" viewBox="0 0 64 64" aria-hidden="true">
+              <polygon points="32,10 54,52 10,52" fill="#f7efe5" stroke="#5b3b2a" stroke-width="4" />
+            </svg>
+          </div>
+          <p class="shape-note">図形の配置（欠けあり）を覚える。</p>
+          <div class="modal-actions">
+            <button type="button" class="primary" id="seat-use-ticket">整理券を使う</button>
+            <button type="button" class="primary" id="seat-use-mirror">反射カードを使う</button>
+            <button type="button" class="ghost" id="seat-close">閉じる</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="item-modal" role="dialog" aria-modal="true" aria-labelledby="item-title" hidden>
+        <div class="modal-card item-card">
+          <h2 id="item-title">アイテム</h2>
+          <div class="item-preview">
+            <img id="item-image" alt="" />
+          </div>
+          <p id="item-desc"></p>
+          <div class="modal-actions">
+            <button type="button" class="primary" id="item-close">閉じる</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="clear-modal" role="dialog" aria-modal="true" aria-labelledby="clear-title" hidden>
+        <div class="modal-card">
+          <h2 id="clear-title">脱出成功</h2>
+          <p>ドアが静かに開く。冷たい風が流れ込んだ。</p>
+          <p class="epilogue">車内アナウンス：「次は――」</p>
+          <div class="modal-actions">
+            <button type="button" class="primary" id="restart">もう一度</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

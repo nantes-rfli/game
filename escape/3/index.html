@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>図書室脱出</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scene">
+      <header class="title">
+        <p class="subtitle" data-i18n="subtitle">Library Escape</p>
+        <h1 data-i18n="title">図書室脱出</h1>
+        <p class="tagline" data-i18n="tagline">静かな書架の間で、手がかりを集めて出口を開く。</p>
+        <div class="title-actions">
+          <label class="language-label" for="language-select" data-i18n="language.label">言語</label>
+          <select
+            id="language-select"
+            class="language-select"
+            aria-label="言語"
+            data-i18n-aria-label="language.aria"
+          >
+            <option value="ja">日本語</option>
+            <option value="en">English</option>
+            <option value="zh">简体中文</option>
+            <option value="ko">한국어</option>
+          </select>
+        </div>
+      </header>
+
+      <main class="room" aria-label="図書室" data-i18n-aria-label="room.aria">
+        <div class="walls" id="walls">
+          <div class="wall is-active" data-wall="0" aria-label="北の壁">
+            <button
+              class="hotspot"
+              type="button"
+              data-object="shelf"
+              aria-label="背表紙を調べる"
+              style="--x:66.663; --y:34.864; --w:15.409; --h:10.756;"
+            ></button>
+          </div>
+          <div class="wall" data-wall="1" aria-label="東の壁">
+            <button
+              class="hotspot"
+              type="button"
+              data-object="desk"
+              aria-label="引き出しを調べる"
+              style="--x:88.023; --y:52.498; --w:9.226; --h:7.649;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-object="card"
+              aria-label="机上カードを調べる"
+              style="--x:46.544; --y:60.23; --w:10.5; --h:6.786;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.clock"
+              aria-label="時計を見る"
+              style="--x:44.571; --y:8.335; --w:10.629; --h:15.62;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.plant"
+              aria-label="観葉植物を見る"
+              style="--x:1.756; --y:21.013; --w:14.322; --h:33.602;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.cardCabinet"
+              aria-label="図書カードの収納棚を見る"
+              style="--x:16.697; --y:30.001; --w:23.408; --h:23.431;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.phone"
+              aria-label="電話を見る"
+              style="--x:63.155; --y:47.794; --w:12.224; --h:10.293;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.deskLamp"
+              aria-label="ランプを見る"
+              style="--x:73.894; --y:33.695; --w:14.444; --h:25.549;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.stackBooks"
+              aria-label="机の上の本を見る"
+              style="--x:15.444; --y:50.178; --w:18.235; --h:12.228;"
+            ></button>
+          </div>
+          <div class="wall" data-wall="2" aria-label="南の壁">
+            <button
+              class="hotspot"
+              type="button"
+              data-object="page"
+              aria-label="ページを調べる"
+              style="--x:76.337; --y:39.088; --w:10.489; --h:4.305;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.lamp.heat"
+              aria-label="ランプを見る"
+              style="--x:12.225; --y:29.89; --w:5.677; --h:11.987; z-index:2;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.lamp.flicker"
+              aria-label="ランプを見る"
+              style="--x:21.907; --y:28.24; --w:3.698; --h:8.004; z-index:2;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.lamp.desk"
+              aria-label="ランプを見る"
+              style="--x:70.867; --y:27.71; --w:3.97; --h:7.957; z-index:2;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.lamp.warm"
+              aria-label="ランプを見る"
+              style="--x:79.088; --y:29.429; --w:5.875; --h:10.416; z-index:2;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.cabinet.left"
+              aria-label="扉付きの書架を見る"
+              style="--x:12.039; --y:10.864; --w:17.917; --h:23.241; z-index:1;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.cabinet.right"
+              aria-label="扉付きの書架を見る"
+              style="--x:70.338; --y:11.717; --w:18.498; --h:23.581; z-index:1;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.wallLight.left"
+              aria-label="壁掛けライトを見る"
+              style="--x:32.219; --y:12.09; --w:3.235; --h:5.606;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.wallLight.right"
+              aria-label="壁掛けライトを見る"
+              style="--x:64.999; --y:12.291; --w:2.991; --h:5.742;"
+            ></button>
+          </div>
+          <div class="wall" data-wall="3" aria-label="西の壁">
+            <button
+              class="hotspot"
+              type="button"
+              data-object="door"
+              aria-label="出口を調べる"
+              style="--x:47.594; --y:38.244; --w:4.945; --h:8.876; z-index:2;"
+            >
+              <span class="door-status" id="door-status" data-i18n="door.status.locked">施錠中</span>
+            </button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.mat"
+              aria-label="マットを見る"
+              style="--x:27.844; --y:74.321; --w:44.757; --h:7.201;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.shelf.left"
+              aria-label="書架を見る"
+              style="--x:0.189; --y:8.037; --w:23.645; --h:50.676;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.shelf.right"
+              aria-label="書架を見る"
+              style="--x:76.48; --y:7.854; --w:23.433; --h:50.804;"
+            ></button>
+            <button
+              class="hotspot"
+              type="button"
+              data-message-key="spot.door.closed"
+              aria-label="扉を見る"
+              style="--x:30.428; --y:13.309; --w:39.587; --h:62.075; z-index:1;"
+            ></button>
+          </div>
+          <div class="room-message" id="room-message" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="nav" aria-label="視点移動">
+          <button class="nav-btn" type="button" data-dir="prev" data-i18n="nav.prev">◀ 左を見る</button>
+          <div class="compass" aria-live="polite">
+            <span class="compass-label" data-i18n="compass.label">View</span>
+            <span class="compass-face" id="compass">N</span>
+          </div>
+          <button class="nav-btn" type="button" data-dir="next" data-i18n="nav.next">右を見る ▶</button>
+        </div>
+      </main>
+
+      <section class="panels" aria-label="情報パネル">
+        <div class="inventory" aria-label="インベントリ">
+          <h2 data-i18n="inventory.title">持ち物</h2>
+          <div class="items" id="inventory-items">
+            <button class="item" data-item="bookmark" aria-hidden="true" data-i18n="item.bookmark">しおり</button>
+          </div>
+          <p class="inventory-empty" id="inventory-empty" data-i18n="inventory.empty">持ち物はない</p>
+        </div>
+      </section>
+
+      <div class="modal" id="shelf-modal" role="dialog" aria-modal="true" aria-labelledby="shelf-title" hidden>
+        <div class="modal-card">
+          <h2 id="shelf-title" data-i18n="shelf.title">書架の背表紙</h2>
+          <p class="modal-lead" data-i18n="shelf.lead">記号のついた本が並んでいる。</p>
+          <div
+            class="shelf-preview"
+            id="shelf-preview"
+            style="--crop-scale:648.97%; --crop-pos-x:78.81%; --crop-pos-y:41.21%; --crop-aspect:2.149;"
+          >
+            <div class="shelf-grid" id="shelf-grid" aria-hidden="true"></div>
+          </div>
+          <p class="modal-note" id="shelf-note" data-i18n="shelf.note.normal">数を数えて記録しておこう。</p>
+          <div class="modal-actions">
+            <button type="button" class="primary" data-close="shelf" data-i18n="button.close">
+              閉じる
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="card-modal" role="dialog" aria-modal="true" aria-labelledby="card-title" hidden>
+        <div class="modal-card">
+          <h2 id="card-title" data-i18n="card.title">机上カード</h2>
+          <p data-i18n="card.lead">記号の順番が書かれている。</p>
+          <div class="card-preview">
+            <img src="assets/card.png" alt="机上カードのアップ" data-i18n-alt="alt.card" />
+            <div
+              class="card-order font-serif color-gold size-sm"
+              id="card-order"
+              aria-hidden="true"
+              style="--x:18.068; --y:33.446; --w:9.183; --h:3.194;"
+            ></div>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="primary" data-close="card" data-i18n="button.close">
+              閉じる
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="desk-modal" role="dialog" aria-modal="true" aria-labelledby="desk-title" hidden>
+        <div class="modal-card">
+          <h2 id="desk-title" data-i18n="desk.title">司書机の引き出し</h2>
+          <p data-i18n="desk.lead">3桁の暗号を入力してください。</p>
+          <div class="desk-preview">
+            <img src="assets/desk-lock.png" alt="引き出しの鍵のアップ" data-i18n-alt="alt.desk" />
+          </div>
+          <form id="desk-form" novalidate>
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="3"
+              placeholder="000"
+              aria-label="3桁の暗号"
+              data-i18n-aria-label="aria.code.input"
+              id="desk-input"
+              required
+            />
+            <p class="form-error" id="desk-error" aria-live="polite"></p>
+            <div class="modal-actions">
+              <button type="submit" class="primary" data-i18n="button.open">開ける</button>
+              <button type="button" class="ghost" data-close="desk" data-i18n="button.close">
+                閉じる
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="page-modal" role="dialog" aria-modal="true" aria-labelledby="page-title" hidden>
+        <div class="modal-card">
+          <h2 id="page-title" data-i18n="page.title">読書テーブルのページ</h2>
+          <p data-i18n="page.lead">ページには数字の並びが書かれている。</p>
+          <div
+            class="page-visual"
+            id="page-visual"
+            aria-label="格子の入ったページ"
+            data-i18n-aria-label="aria.page.visual"
+            style="--page-bg-x:87.5%; --page-bg-y:87.3%; --page-bg-size:500%;"
+          >
+            <div class="page-grid" id="page-grid" aria-hidden="true"></div>
+          </div>
+          <p class="modal-note" id="page-note" data-i18n="page.note">
+            薄い紙片を重ねると、何か見えそうだ。
+          </p>
+          <p class="modal-result" id="page-result"></p>
+          <div class="page-items" id="page-items">
+            <p class="page-items-label" data-i18n="page.items.label">持ち物を試す</p>
+            <div class="page-items-list">
+              <button
+                type="button"
+                class="item"
+                id="page-item-bookmark"
+                data-item="bookmark"
+                data-i18n="item.bookmark"
+                hidden
+              >
+                しおり
+              </button>
+            </div>
+            <p class="page-items-note" id="page-items-note" data-i18n="page.items.empty">
+              今は試せるものがない。
+            </p>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="ghost" data-close="page" data-i18n="button.close">
+              閉じる
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="door-modal" role="dialog" aria-modal="true" aria-labelledby="door-title" hidden>
+        <div class="modal-card">
+          <h2 id="door-title" data-i18n="door.title">出口のドア</h2>
+          <p data-i18n="door.lead">3桁の暗号を入力してください。</p>
+          <div class="door-preview">
+            <img src="assets/door-lock.png" alt="ドアの鍵のアップ" data-i18n-alt="alt.door" />
+          </div>
+          <form id="door-form" novalidate>
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="3"
+              placeholder="000"
+              aria-label="3桁の暗号"
+              data-i18n-aria-label="aria.code.input"
+              id="door-input"
+              required
+            />
+            <p class="form-error" id="door-error" aria-live="polite"></p>
+            <div class="modal-actions">
+              <button type="submit" class="primary" data-i18n="button.open">開ける</button>
+              <button type="button" class="ghost" data-close="door" data-i18n="button.close">
+                閉じる
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="item-modal" role="dialog" aria-modal="true" aria-labelledby="item-title" hidden>
+        <div class="modal-card item-card" id="item-card">
+          <h2 id="item-title" data-i18n="item.title">アイテム</h2>
+          <div class="item-preview">
+            <img id="item-image" alt="" />
+          </div>
+          <p id="item-desc"></p>
+          <div class="modal-actions">
+            <button type="button" class="primary" data-close="item" data-i18n="button.close">
+              閉じる
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="clear-modal" role="dialog" aria-modal="true" aria-labelledby="clear-title" hidden>
+        <div class="modal-card">
+          <h2 id="clear-title" data-i18n="clear.title">脱出成功</h2>
+          <p data-i18n="clear.lead">ドアが静かに開く。外の光が差し込んだ。</p>
+          <p class="epilogue" data-i18n="clear.epilogue">司書の声：「またいつでも、どうぞ。」</p>
+          <div class="modal-actions">
+            <button type="button" class="primary" id="restart" data-i18n="button.restart">
+              もう一度
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Escape Hub</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap");
+
+      :root {
+        --ink: #1c1510;
+        --paper: #f7f1e8;
+        --accent: #ce5f3a;
+        --accent-dark: #7a3520;
+        --shadow: rgba(23, 15, 10, 0.18);
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+        background: radial-gradient(circle at top, #fff7ea 0%, #e5d2b9 45%, #b79b7f 100%);
+        color: var(--ink);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px 18px 28px;
+      }
+      main {
+        width: min(980px, 100%);
+        display: grid;
+        align-content: start;
+        gap: 8px;
+      }
+      h1 {
+        font-family: "Fraunces", "Yu Mincho", serif;
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 2.6rem);
+        letter-spacing: 0.03em;
+        line-height: 1.18;
+      }
+      .hero {
+        background:
+          radial-gradient(circle at 15% 20%, rgba(244, 220, 180, 0.55), transparent 60%),
+          radial-gradient(circle at 85% 0%, rgba(206, 95, 58, 0.18), transparent 45%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.9) 100%);
+        border-radius: 22px;
+        padding: 18px 22px 16px;
+        box-shadow: 0 18px 34px var(--shadow);
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: -30% -10% auto -10%;
+        height: 90%;
+        background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.6), transparent 65%);
+        opacity: 0.6;
+        pointer-events: none;
+      }
+      .hero p {
+        margin: 0;
+        color: rgba(28, 21, 16, 0.75);
+        max-width: 560px;
+        line-height: 1.6;
+      }
+      .hero p:last-of-type {
+        margin-bottom: 0;
+      }
+      .games {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        align-content: start;
+        gap: 2px;
+      }
+      .games li {
+        margin: 0;
+      }
+      .game-card {
+        display: block;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 16px 30px var(--shadow);
+        text-decoration: none;
+        color: inherit;
+        overflow: hidden;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .game-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 32px rgba(23, 15, 10, 0.24);
+      }
+      .game-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 10px;
+        padding: 14px 16px;
+      }
+      .game-visual {
+        border-radius: 16px;
+        height: 130px;
+        position: relative;
+        overflow: hidden;
+      }
+      .game-visual::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(130deg, rgba(255, 255, 255, 0.25), transparent);
+      }
+      .game-visual::after {
+        content: "";
+        position: absolute;
+        inset: 10px;
+        border-radius: 14px;
+        border: 1px dashed rgba(28, 21, 16, 0.22);
+      }
+      .scene {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .piece {
+        position: absolute;
+        border-radius: 10px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        filter: drop-shadow(0 8px 12px rgba(23, 15, 10, 0.2));
+      }
+      .scene-room .window {
+        left: 10%;
+        top: 18%;
+        width: 32%;
+        height: 40%;
+        background-image: url("1/assets/safe-closed.svg");
+        border-radius: 12px;
+      }
+      .scene-room .shelf {
+        left: 8%;
+        bottom: 12%;
+        width: 60%;
+        height: 28%;
+        background-image: url("1/assets/shelf.svg");
+      }
+      .scene-room .key {
+        right: 14%;
+        top: 18%;
+        width: 20%;
+        height: 20%;
+        background-image: url("1/assets/key.svg");
+      }
+      .scene-room .memo {
+        right: 12%;
+        bottom: 16%;
+        width: 28%;
+        height: 22%;
+        background-image: url("1/assets/memo.svg");
+      }
+      .scene-train .train-window {
+        left: 12%;
+        top: 20%;
+        width: 38%;
+        height: 40%;
+        background-image: url("2/assets/window.svg");
+        border-radius: 18px;
+      }
+      .scene-train .door {
+        right: 12%;
+        top: 18%;
+        width: 26%;
+        height: 60%;
+        background-image: url("2/assets/door.svg");
+        border-radius: 12px;
+      }
+      .scene-train .monitor {
+        left: 18%;
+        bottom: 18%;
+        width: 26%;
+        height: 16%;
+        background-image: url("2/assets/monitor.svg");
+      }
+      .game-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-size: 0.85rem;
+        color: rgba(28, 21, 16, 0.7);
+      }
+      .game-title {
+        margin: 0;
+        font-size: 1.28rem;
+        font-weight: 700;
+      }
+      .game-desc {
+        margin: 4px 0 6px;
+        color: rgba(28, 21, 16, 0.75);
+      }
+      .play {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background: var(--accent);
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        width: fit-content;
+      }
+      .play span {
+        font-size: 1rem;
+      }
+      .game-card[data-game="room"] .game-visual {
+        background: radial-gradient(circle at 30% 20%, rgba(206, 95, 58, 0.5), transparent 60%),
+          linear-gradient(140deg, #f4e5cf, #d0b59a);
+      }
+      .game-card[data-game="train"] .game-visual {
+        background: radial-gradient(circle at 70% 30%, rgba(80, 130, 180, 0.45), transparent 60%),
+          linear-gradient(140deg, #e3ecf6, #b7c7da);
+      }
+      @media (min-width: 760px) {
+        .game-inner {
+          grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+          align-items: center;
+        }
+        .game-visual {
+          height: 150px;
+        }
+      }
+      .note {
+        color: rgba(28, 21, 16, 0.7);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <p class="note">Escape Hub</p>
+        <h1>脱出への一歩</h1>
+        <p>短時間で遊べる脱出ゲームのアーカイブ。気になるシーンへ飛び込もう。</p>
+      </section>
+
+      <ul class="games">
+        <li>
+          <a class="game-card" data-game="room" href="/escape/1/">
+            <div class="game-inner">
+              <div class="game-visual" aria-hidden="true">
+                <div class="scene scene-room">
+                  <span class="piece window"></span>
+                  <span class="piece shelf"></span>
+                  <span class="piece key"></span>
+                  <span class="piece memo"></span>
+                </div>
+              </div>
+              <div>
+                <p class="game-title">ワンルーム脱出（#1）</p>
+                <p class="game-desc">身近な部屋に隠された小さな違和感を追って、最後の鍵を探す。</p>
+                <div class="game-meta">
+                  <span>所要: 5-7分</span>
+                  <span>難易度: Easy</span>
+                </div>
+                <div class="play"><span>▶</span> Start</div>
+              </div>
+            </div>
+          </a>
+        </li>
+        <li>
+          <a class="game-card" data-game="train" href="/escape/2/">
+            <div class="game-inner">
+              <div class="game-visual" aria-hidden="true">
+                <div class="scene scene-train">
+                  <span class="piece train-window"></span>
+                  <span class="piece door"></span>
+                  <span class="piece monitor"></span>
+                </div>
+              </div>
+              <div>
+                <p class="game-title">電車内脱出（#2）</p>
+                <p class="game-desc">静かな車内に残された手がかりを繋ぎ、閉ざされた扉を開く。</p>
+                <div class="game-meta">
+                  <span>所要: 6-8分</span>
+                  <span>難易度: Normal</span>
+                </div>
+                <div class="play"><span>▶</span> Start</div>
+              </div>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>

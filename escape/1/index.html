@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ワンルーム脱出</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="scene">
+      <header class="title">
+        <p class="subtitle">One-Room Escape</p>
+        <h1>ワンルーム脱出</h1>
+        <p class="tagline">ヒントを集め、3桁の金庫を開け、鍵で脱出する。</p>
+        <div class="difficulty">
+          <label for="difficulty-select">Difficulty</label>
+          <select id="difficulty-select">
+            <option value="easy">Easy</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+      </header>
+
+      <main class="room" aria-label="部屋">
+        <div class="walls" id="walls">
+          <div class="wall is-active" data-wall="0" aria-label="北の壁">
+            <button class="object poster" type="button" data-object="poster" aria-label="ポスターを調べる">
+              <span class="label">POSTER</span>
+            </button>
+            <button class="object clock" type="button" data-object="clock" aria-label="時計を調べる">
+              <span class="label">CLOCK</span>
+            </button>
+          </div>
+          <div class="wall" data-wall="1" aria-label="東の壁">
+            <button class="object shelf" type="button" data-object="shelf" aria-label="本棚を調べる">
+              <span class="label">SHELF</span>
+            </button>
+            <button class="object drawer" type="button" data-object="drawer" aria-label="引き出しを調べる">
+              <span class="label">DRAWER</span>
+            </button>
+          </div>
+          <div class="wall" data-wall="2" aria-label="南の壁">
+            <button class="object safe" type="button" data-object="safe" aria-label="金庫を調べる">
+              <span class="label">SAFE</span>
+            </button>
+          </div>
+          <div class="wall" data-wall="3" aria-label="西の壁">
+            <button class="object door" type="button" data-object="door" aria-label="ドアを調べる">
+              <span class="label">DOOR</span>
+              <span class="status" id="door-status">LOCKED</span>
+            </button>
+            <button class="object door-note" type="button" data-object="door-note" aria-label="ドア横のメモを調べる">
+              <span class="label">NOTE</span>
+            </button>
+          </div>
+        </div>
+        <div class="floor" aria-hidden="true"></div>
+        <div class="nav" aria-label="視点移動">
+          <button class="nav-btn" type="button" data-dir="prev">◀ 左を見る</button>
+          <div class="compass" aria-live="polite">
+            <span class="compass-label">View</span>
+            <span class="compass-face" id="compass">N</span>
+            <span class="compass-note" id="compass-note">未調査あり</span>
+          </div>
+          <button class="nav-btn" type="button" data-dir="next">右を見る ▶</button>
+        </div>
+      </main>
+
+      <section class="panels" aria-label="情報パネル">
+        <div class="inventory" aria-label="インベントリ">
+          <h2>Inventory</h2>
+          <div class="items" id="inventory-items">
+            <div class="item" data-item="key" aria-hidden="true">鍵</div>
+            <div class="item memo" data-item="memo" aria-hidden="true">メモ</div>
+          </div>
+        </div>
+
+        <div class="hints" aria-label="ヒント一覧">
+          <h2>Hints</h2>
+          <ul id="hint-list"></ul>
+        </div>
+
+        <div class="log" aria-label="ログ">
+          <h2>Log</h2>
+          <ul id="log-list"></ul>
+        </div>
+      </section>
+
+      <div class="modal" id="safe-modal" role="dialog" aria-modal="true" aria-labelledby="safe-title" hidden>
+        <div class="modal-card">
+          <h2 id="safe-title">金庫</h2>
+          <p>3桁の番号を入力してください。</p>
+          <form id="safe-form" novalidate>
+            <input
+              type="text"
+              inputmode="numeric"
+              pattern="\d{3}"
+              maxlength="3"
+              placeholder="000"
+              aria-label="3桁の番号"
+              id="safe-input"
+              required
+            />
+            <div class="modal-actions">
+              <button type="submit" class="primary">開く</button>
+              <button type="button" class="ghost" id="safe-cancel">閉じる</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="drawer-modal" role="dialog" aria-modal="true" aria-labelledby="drawer-title" hidden>
+        <div class="modal-card">
+          <h2 id="drawer-title">引き出し</h2>
+          <p>3桁の番号を入力してください。</p>
+          <form id="drawer-form" novalidate>
+            <input
+              type="text"
+              inputmode="numeric"
+              pattern="\d{3}"
+              maxlength="3"
+              placeholder="000"
+              aria-label="3桁の番号"
+              id="drawer-input"
+              required
+            />
+            <div class="modal-actions">
+              <button type="submit" class="primary">開く</button>
+              <button type="button" class="ghost" id="drawer-cancel">閉じる</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="door-modal" role="dialog" aria-modal="true" aria-labelledby="door-title" hidden>
+        <div class="modal-card">
+          <h2 id="door-title">ドアノブ</h2>
+          <p>2桁の暗号を入力してください。</p>
+          <form id="door-form" novalidate>
+            <input
+              type="text"
+              inputmode="numeric"
+              maxlength="2"
+              placeholder="00"
+              aria-label="2桁の暗号"
+              id="door-input"
+              required
+            />
+            <div class="modal-actions">
+              <button type="submit" class="primary">開ける</button>
+              <button type="button" class="ghost" id="door-cancel">閉じる</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal" id="item-modal" role="dialog" aria-modal="true" aria-labelledby="item-title" hidden>
+        <div class="modal-card item-card">
+          <h2 id="item-title">アイテム</h2>
+          <div class="item-preview">
+            <img id="item-image" alt="" />
+          </div>
+          <p id="item-desc"></p>
+          <div class="modal-actions">
+            <button type="button" class="primary" id="item-close">閉じる</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal" id="clear-modal" role="dialog" aria-modal="true" aria-labelledby="clear-title" hidden>
+        <div class="modal-card">
+          <h2 id="clear-title">脱出成功</h2>
+          <p>扉が開いた。外の光が差し込む。</p>
+          <p class="epilogue">冷たい風が背中を押す。次の扉へ。</p>
+          <div class="modal-actions">
+            <button type="button" class="primary" id="restart">もう一度</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
