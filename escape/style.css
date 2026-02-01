@@ -141,6 +141,46 @@ h1 {
   object-fit: cover;
   filter: none;
 }
+.feedback {
+  margin-top: 20px;
+  padding: 18px 22px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 16px 32px var(--shadow);
+  display: grid;
+  gap: 10px;
+}
+.feedback h2 {
+  margin: 0;
+  font-family: "Fraunces", "Yu Mincho", serif;
+  font-size: 1.2rem;
+}
+.feedback p {
+  margin: 0;
+  color: rgba(21, 25, 31, 0.72);
+}
+.feedback-link {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 12px 20px rgba(255, 106, 74, 0.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.feedback-link:hover,
+.feedback-link:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 26px rgba(255, 106, 74, 0.36);
+  outline: 2px solid var(--accent-dark);
+  outline-offset: 2px;
+}
 .scene {
   position: absolute;
   inset: 0;

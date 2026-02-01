@@ -598,6 +598,13 @@ h1 {
   color: var(--muted);
 }
 
+a.ghost {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .form-error {
   margin: 6px 0 0;
   color: #c23828;
