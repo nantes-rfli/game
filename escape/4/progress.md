@@ -49,3 +49,25 @@ Original prompt: [$develop-web-game](/Users/nanto/.codex/skills/develop-web-game
 ## TODO (next)
 - `assets/scale.png`（秤の単体画像）を用意したら、`script.js` の `getModalImage("scale")` に候補を戻して秤モーダルにも画像を表示する。
 - `lamp-on/off` は暫定の左右分割版なので、必要なら個別に描き起こした最終素材へ差し替える。
+- 2026-02-10: `assets/scale.png` 配置を反映。
+  - `script.js` の `scale` モーダル画像フォールバックを `assets/scale.png` に戻し、秤モーダルで画像表示を確認。
+- 2026-02-10: 記録室背景の電源ON/OFF差分対応を追加。
+  - `hotspots.json` の `record-room` に `backgroundOn` / `backgroundOff` を追加。
+  - `script.js` の `renderStage()` を拡張し、`powerOn` 状態に応じて背景画像を切替（未配置時は `background` へ自動フォールバック）。
+  - `setFlag("powerOn")` 時に `renderStage()` を再描画するように変更。
+  - `record-room-off.png` 未配置でconsole 404になるため、暫定として `record-room.png` から `record-room-off.png` を複製配置。
+- 2026-02-10: 再検証。
+  - `WEB_GAME_CLIENT` 実行（`output/web-game/client-scale-bg2`）。
+  - `playwright_scenario_suite.mjs` 実行（`output/web-game/suite-bg2`）で `total=6 passed=6 failed=0`、`errors.json` なし。
+
+## TODO (next)
+- `record-room-off.png` を最終素材に差し替える（現在は暫定で `record-room.png` の複製）。
+
+- 2026-02-10: `record-room-off.png` をユーザー提供素材へ差し替え済み（実ファイル確認: ON/OFFでhash相違、解像度差あり）。
+- 2026-02-10: 再検証を実施。
+  - `WEB_GAME_CLIENT` 実行（`output/web-game/client-record-room-off-verify`）。
+  - `playwright_scenario_suite.mjs` 実行（`output/web-game/suite-record-room-off-verify`）で `total=6 passed=6 failed=0`、`errors.json` なし。
+  - 目視確認: `scale-lamp/main-no-hotspot-icons.png` で背景OFF版が適用され、ホットスポット小アイコン非表示を維持。
+
+## TODO (next)
+- 背景ON/OFFの見え方（暗さ・色味・コントラスト）の最終トーンを必要なら微調整する。

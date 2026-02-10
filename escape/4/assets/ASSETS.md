@@ -28,6 +28,7 @@
 
 ### 背景（4枚）
 - `escape/4/assets/record-room.png`（記録室）
+- `escape/4/assets/record-room-off.png`（記録室OFF差分。未配置時は `record-room.png` を共用）
 - `escape/4/assets/hallway.png`（廊下）
 - `escape/4/assets/storage.png`（保管庫）
 - `escape/4/assets/washroom.png`（洗面）

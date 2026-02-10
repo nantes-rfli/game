@@ -46,6 +46,7 @@
     { "name": "音: エラー", "anyOf": ["audio/sfx-error.mp3", "audio/sfx-error.wav"] }
   ],
   "optional": [
+    { "name": "背景: 記録室OFF差分", "anyOf": ["record-room-off.png"] },
     { "name": "UI枠: 引き出し", "anyOf": ["ui-drawer-modal.png", "ui-drawer-modal.svg"] },
     { "name": "UI枠: キーパッド", "anyOf": ["ui-keypad-6digit.png", "ui-keypad-6digit.svg"] },
     { "name": "UI枠: 配電盤", "anyOf": ["ui-panel-modal.png", "ui-panel-modal.svg"] },
