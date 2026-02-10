@@ -13,6 +13,7 @@ Original prompt: [$develop-web-game](/Users/nanto/.codex/skills/develop-web-game
   - `scenario-door`: `flags.doorUnlocked=true` かつ `notes.doorCodeProgress=6`
   - `scenario-clock`: `flags.clockFinalSet=true` かつ `modalTitle="脱出成功"`
 - 2026-02-10: 追加シナリオ群でコンソールエラーなし（各出力に `errors.json` 未生成）。
+- 2026-02-10: CI高速化を反映。`escape4-regression` workflowに `actions/cache` を追加し、`~/.npm` と `~/.cache/ms-playwright` をキャッシュするようにした（`--with-deps`運用は維持）。
 
 ## TODO (next)
-- （任意）Actions実行時間を短縮するため、`npx playwright install --with-deps chromium` のキャッシュ最適化を検討する。
+- （任意）GitHub Actionsの2回目以降実行でキャッシュヒット率と実行時間差（before/after）を記録する。

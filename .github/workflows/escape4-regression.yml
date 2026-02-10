@@ -17,6 +17,8 @@ jobs:
   suite:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      NPM_CONFIG_CACHE: ~/.npm
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,6 +27,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-escape4-${{ hashFiles('.github/workflows/escape4-regression.yml') }}
+
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-ms-playwright-escape4-${{ hashFiles('.github/workflows/escape4-regression.yml') }}
 
       - name: Install Playwright
         run: npm install playwright --no-save
