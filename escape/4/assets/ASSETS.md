@@ -40,6 +40,7 @@
 - `escape/4/assets/clock.(png|svg)`（壁時計）
 - `escape/4/assets/window.(png|svg)`（窓）
 - `escape/4/assets/panel.(png|svg)`（配電盤の外観）
+- `escape/4/assets/scale.(png|svg)`（秤の拡大表示）
 - `escape/4/assets/lamp.(png|svg)`（電気スタンド）
 - `escape/4/assets/door.(png|svg)`（扉）
 
@@ -77,7 +78,7 @@
 - `escape/4/assets/ui-panel-modal.(png|svg)`（配電盤拡大枠）
 - `escape/4/assets/ui-clock-modal.(png|svg)`（時計合わせ拡大枠）
 - `escape/4/assets/ui-hint-speaker.(png|svg)`（館内放送/ヒントのアイコン）
-- `escape/4/assets/ui-lamp-on.(png|svg)` / `ui-lamp-off.(png|svg)`（点灯差分）
+- `escape/4/assets/lamp-on.(png|svg)` / `lamp-off.(png|svg)`（点灯差分。未用意時は `lamp` を共用）
 - `escape/4/assets/fx-fog.png`（窓の曇りレイヤ：拭き取り演出用）
 
 ---

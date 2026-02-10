@@ -57,6 +57,42 @@ body {
   gap: 18px;
 }
 
+#game-root:fullscreen {
+  width: 100vw;
+  max-width: none;
+  min-height: 100vh;
+  padding: 16px;
+  background: #e7edf5;
+  align-content: start;
+  overflow: auto;
+}
+
+#game-root:fullscreen .room {
+  max-height: 74vh;
+}
+
+#game-root:fullscreen .stage {
+  min-height: min(68vh, 720px);
+}
+
+#game-root:-webkit-full-screen {
+  width: 100vw;
+  max-width: none;
+  min-height: 100vh;
+  padding: 16px;
+  background: #e7edf5;
+  align-content: start;
+  overflow: auto;
+}
+
+#game-root:-webkit-full-screen .room {
+  max-height: 74vh;
+}
+
+#game-root:-webkit-full-screen .stage {
+  min-height: min(68vh, 720px);
+}
+
 .title {
   background:
     radial-gradient(circle at 0% 0%, rgba(255, 255, 255, 0.95), transparent 60%),

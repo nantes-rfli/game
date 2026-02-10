@@ -51,7 +51,8 @@
     { "name": "UI枠: 配電盤", "anyOf": ["ui-panel-modal.png", "ui-panel-modal.svg"] },
     { "name": "UI枠: 時計", "anyOf": ["ui-clock-modal.png", "ui-clock-modal.svg"] },
     { "name": "UI: 館内放送", "anyOf": ["ui-hint-speaker.png", "ui-hint-speaker.svg"] },
-    { "name": "UI: ランプ差分", "anyOf": ["ui-lamp-on.png", "ui-lamp-on.svg", "ui-lamp-off.png", "ui-lamp-off.svg"] },
+    { "name": "秤（拡大表示）", "anyOf": ["scale.png", "scale.svg"] },
+    { "name": "電気スタンド差分", "anyOf": ["lamp-on.png", "lamp-on.svg", "lamp-off.png", "lamp-off.svg"] },
     { "name": "音: 引き出し", "anyOf": ["audio/sfx-drawer-open.mp3", "audio/sfx-drawer-open.wav"] },
     { "name": "音: 紙", "anyOf": ["audio/sfx-paper.mp3", "audio/sfx-paper.wav"] },
     { "name": "音: テープ", "anyOf": ["audio/sfx-tape.mp3", "audio/sfx-tape.wav"] },
@@ -60,4 +61,3 @@
     { "name": "音: クリア", "anyOf": ["audio/sfx-clear.mp3", "audio/sfx-clear.wav"] }
   ]
 }
-
