@@ -15,5 +15,37 @@ Original prompt: [$develop-web-game](/Users/nanto/.codex/skills/develop-web-game
 - 2026-02-10: 追加シナリオ群でコンソールエラーなし（各出力に `errors.json` 未生成）。
 - 2026-02-10: CI高速化を反映。`escape4-regression` workflowに `actions/cache` を追加し、`~/.npm` と `~/.cache/ms-playwright` をキャッシュするようにした（`--with-deps`運用は維持）。
 
+- 2026-02-10: 次アクションとして `f` キーのフルスクリーントグルを実装。
+  - `index.html` に `#game-root` と `#fullscreen-toggle` を追加。
+  - `script.js` で `toggleFullscreen()` を追加し、ボタン操作・`f` キー切替・`Esc` 解除・UI文言切替を実装。
+  - `render_game_to_text` に `fullscreen` フラグを追加してテキスト状態でも全画面状態を検証可能にした。
+  - `styles.css` に `#game-root:fullscreen` / `#game-root:-webkit-full-screen` スタイルを追加し、全画面時のレイアウト崩れを抑制。
+- 2026-02-10: 回帰シナリオを拡張。
+  - `scenarios/fullscreen_toggle.json` を新規追加（ボタンON→Esc OFF→f ON→f OFF を検証）。
+  - `scenarios/suite.json` に `fullscreen` シナリオを追加。
+- 2026-02-10: 検証実行。
+  - `WEB_GAME_CLIENT` 実行（`output/web-game/client-fullscreen`）で `state-0/1.json` とスクリーンショットを確認、console/pageerror なし。
+  - `playwright_scenario_suite.mjs` を実行し、初回失敗（Escで解除されず）を確認後、keydownでEsc時に `toggleFullscreen()` を呼ぶ修正を追加。
+  - 修正後に再実行し `total=5 passed=5 failed=0` を確認。
+  - `output/web-game/suite/fullscreen/*.png` と `*.state.json` を目視・内容確認し、表示と `fullscreen` 状態の整合を確認。
+
 ## TODO (next)
 - （任意）GitHub Actionsの2回目以降実行でキャッシュヒット率と実行時間差（before/after）を記録する。
+- 実ブラウザ（headed）でOS実フルスクリーン遷移時の体感（特にMacのSpaces遷移）を1回確認して、必要なら遷移中メッセージを追加する。
+- 2026-02-10: UI調整（次アクション）。
+  - ホットスポット上の小アイコン表示を本番向けに無効化（`SHOW_HOTSPOT_ICONS=false`）。
+  - モーダル画像はホットスポット `icon` を使わず、モーダル種別のフォールバックから解決するよう整理。
+  - 画像存在確認をHEADで行い、存在する画像のみ表示する安全化を追加（404の連鎖抑制）。
+- 2026-02-10: 秤・ランプ素材対応。
+  - 秤の `hotspots.json` 参照を配電盤画像から切り離し（`rr-scale.icon` を削除）。
+  - `scale` モーダルは専用素材未配置時は画像を出さない挙動に変更。
+  - ランプは `assets/lamp-off.png` / `assets/lamp-on.png` を優先利用する実装に変更。
+  - 既存 `assets/lamp.png` が左右2灯構成だったため、暫定対応として左右分割して `lamp-off.png`（左）と `lamp-on.png`（右）を生成。
+- 2026-02-10: 回帰確認を拡張。
+  - `scenarios/scale_lamp_visual.json` を追加（メイン画面/秤/ランプの視覚確認）。
+  - `scenarios/suite.json` に `scale-lamp` シナリオを追加。
+  - 最終実行: `output/web-game/suite-next3` で `total=6 passed=6 failed=0`（errors.json なし）。
+
+## TODO (next)
+- `assets/scale.png`（秤の単体画像）を用意したら、`script.js` の `getModalImage("scale")` に候補を戻して秤モーダルにも画像を表示する。
+- `lamp-on/off` は暫定の左右分割版なので、必要なら個別に描き起こした最終素材へ差し替える。

@@ -1,6 +1,21 @@
 {
   "scenarios": [
     {
+      "name": "scale-lamp",
+      "file": "scale_lamp_visual.json",
+      "checks": [
+        { "path": "modalTitle", "equals": "電気スタンド" },
+        { "path": "flags.powerOn", "equals": false }
+      ]
+    },
+    {
+      "name": "fullscreen",
+      "file": "fullscreen_toggle.json",
+      "checks": [
+        { "path": "fullscreen", "equals": false }
+      ]
+    },
+    {
       "name": "recorder",
       "file": "recorder_modal_play.json",
       "checks": [

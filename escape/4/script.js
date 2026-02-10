@@ -1,11 +1,14 @@
 (() => {
   const STORAGE_KEY = "escape4-state-v1";
   const MAX_LOGS = 8;
+  const SHOW_HOTSPOT_ICONS = false;
 
+  const gameRoot = document.getElementById("game-root");
   const stage = document.getElementById("stage");
   const hotspotsEl = document.getElementById("hotspots");
   const roomMessage = document.getElementById("room-message");
   const tabButtons = Array.from(document.querySelectorAll("[data-scene]"));
+  const fullscreenToggleButton = document.getElementById("fullscreen-toggle");
   const fxToggle = document.getElementById("fx-toggle");
   const rainVolumeSlider = document.getElementById("rain-volume");
   const inventoryItems = document.getElementById("inventory-items");
@@ -26,7 +29,7 @@
 
   const MODAL_IMAGE_FALLBACK = {
     drawers: "assets/drawers.png",
-    scale: "assets/panel.png",
+    scale: null,
     desk: "assets/desk.png",
     recorder: "assets/recorder.png",
     clock: "assets/clock.png",
@@ -246,11 +249,23 @@
   let useVirtualTimeForTests = false;
   let virtualClockMs = 0;
   const virtualDelayQueue = [];
+  const assetExistsCache = new Map();
 
   const normalizeText = (value) =>
     String(value ?? "")
       .trim()
       .replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xfee0));
+
+  async function hasAsset(path) {
+    if (assetExistsCache.has(path)) {
+      return assetExistsCache.get(path);
+    }
+    const probe = fetch(path, { method: "HEAD", cache: "no-store" })
+      .then((res) => res.ok)
+      .catch(() => false);
+    assetExistsCache.set(path, probe);
+    return probe;
+  }
 
   function saveState() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -345,7 +360,7 @@
       btn.style.setProperty("--w", String(spot.w));
       btn.style.setProperty("--h", String(spot.h));
       btn.setAttribute("aria-label", spot.label);
-       if (spot.icon) {
+      if (SHOW_HOTSPOT_ICONS && spot.icon) {
         const icon = document.createElement("div");
         icon.className = "hotspot-icon";
         icon.style.backgroundImage = `url(${spot.icon})`;
@@ -568,15 +583,22 @@
     render(body);
   }
 
-  function getModalImage(name, meta) {
-    if (meta?.icon) return meta.icon;
-    return MODAL_IMAGE_FALLBACK[name] ?? null;
+  function getModalImage(name) {
+    const candidates = [];
+    if (name === "lamp") {
+      candidates.push(state.flags.powerOn ? "assets/lamp-on.png" : "assets/lamp-off.png");
+    }
+    const fallback = MODAL_IMAGE_FALLBACK[name];
+    if (fallback) candidates.push(fallback);
+    const unique = [...new Set(candidates.filter(Boolean))];
+    if (unique.length === 0) return null;
+    return unique.length === 1 ? unique[0] : unique;
   }
 
   function appendModalLeadImage(body, src, label) {
-    if (!src) return;
+    const sources = Array.isArray(src) ? src.filter(Boolean) : src ? [src] : [];
+    if (sources.length === 0) return;
     const img = document.createElement("img");
-    img.src = src;
     img.alt = `${label}の画像`;
     img.style.width = "100%";
     img.style.maxWidth = "420px";
@@ -586,6 +608,16 @@
     img.style.display = "block";
     img.style.marginBottom = "12px";
     body.appendChild(img);
+    void (async () => {
+      for (const source of sources) {
+        if (await hasAsset(source)) {
+          img.src = source;
+          return;
+        }
+      }
+      console.warn(`[asset] lead image not found for ${label}:`, sources);
+      img.remove();
+    })();
   }
 
   function openItemModal(itemId) {
@@ -698,7 +730,7 @@
       return;
     }
     if (action.type === "modal") {
-      openNamedModal(action.name, { icon: spot.icon, label: spot.label });
+      openNamedModal(action.name, { label: spot.label });
     }
   }
 
@@ -2022,6 +2054,42 @@
     window.location.reload();
   }
 
+  function updateFullscreenToggleUi() {
+    if (!fullscreenToggleButton) return;
+    const isFullscreen = Boolean(document.fullscreenElement);
+    fullscreenToggleButton.textContent = isFullscreen ? "全画面解除 (F)" : "全画面 (F)";
+    fullscreenToggleButton.setAttribute("aria-pressed", isFullscreen ? "true" : "false");
+  }
+
+  function isEditableElement(target) {
+    if (!(target instanceof Element)) return false;
+    const tag = target.tagName.toLowerCase();
+    if (tag === "input" || tag === "textarea" || tag === "select") return true;
+    if (target.isContentEditable) return true;
+    return Boolean(target.closest("[contenteditable='true']"));
+  }
+
+  async function toggleFullscreen() {
+    if (document.fullscreenElement) {
+      try {
+        await document.exitFullscreen();
+      } catch (error) {
+        console.warn("exit fullscreen failed", error);
+      }
+      return;
+    }
+    if (!gameRoot || typeof gameRoot.requestFullscreen !== "function") {
+      showRoomMessage("この環境では全画面表示に対応していません。");
+      return;
+    }
+    try {
+      await gameRoot.requestFullscreen();
+    } catch (error) {
+      console.warn("request fullscreen failed", error);
+      showRoomMessage("全画面表示を開始できませんでした。");
+    }
+  }
+
   async function init() {
     try {
       gameData = await loadJsonWithFallback("hotspots.json", HOTSPOTS_FALLBACK);
@@ -2047,14 +2115,32 @@
     });
 
     restartButton.addEventListener("click", resetGame);
+    fullscreenToggleButton?.addEventListener("click", () => {
+      toggleFullscreen();
+    });
     clearSelectionButton.addEventListener("click", () => {
       selectedItem = null;
       renderInventory();
       showRoomMessage("使用を解除した。");
     });
+    document.addEventListener("fullscreenchange", updateFullscreenToggleUi);
+    window.addEventListener("keydown", (event) => {
+      if (event.defaultPrevented || event.repeat) return;
+      const key = event.key.toLowerCase();
+      if (key === "escape" && document.fullscreenElement) {
+        event.preventDefault();
+        toggleFullscreen();
+        return;
+      }
+      if (key !== "f") return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      if (isEditableElement(event.target)) return;
+      event.preventDefault();
+      toggleFullscreen();
+    });
+    updateFullscreenToggleUi();
 
     // 初期描画: 軽量をデフォルト、希望者は高品質に
-    const ua = navigator.userAgent.toLowerCase();
     const storedFx = localStorage.getItem("escape4-highfx") === "1";
     highFx = storedFx;
     document.documentElement.classList.toggle("fx", highFx);
@@ -2151,6 +2237,7 @@
     const payload = {
       mode: state.flags.clockFinalSet ? "clear" : activeModal ? "modal" : "explore",
       coordinateSystem: "stage左上原点。xは右向き、yは下向き。hotspotsのx/y/w/hはstageに対する百分率。",
+      fullscreen: Boolean(document.fullscreenElement),
       scene: state.scene,
       modalTitle: getModalTitle(),
       roomMessage: roomMessage?.textContent?.trim() || "",

@@ -6,7 +6,7 @@
       "fit": "cover",
       "hotspots": [
         { "id": "rr-drawers", "label": "引き出し棚", "x": 37.69, "y": 34.79, "w": 35.55, "h": 51.33, "action": { "type": "modal", "name": "drawers" } },
-        { "id": "rr-scale", "label": "秤", "x": 56.70, "y": 24.95, "w": 9.51, "h": 9.41, "action": { "type": "modal", "name": "scale" }, "icon": "assets/panel.png" },
+        { "id": "rr-scale", "label": "秤", "x": 56.70, "y": 24.95, "w": 9.51, "h": 9.41, "action": { "type": "modal", "name": "scale" } },
         { "id": "rr-desk", "label": "机", "x": 3.18, "y": 56.61, "w": 34.13, "h": 34.93, "action": { "type": "modal", "name": "desk" }, "icon": "assets/desk.png" },
         { "id": "rr-recorder", "label": "レコーダー", "x": 24.38, "y": 47.34, "w": 11.50, "h": 8.70, "action": { "type": "modal", "name": "recorder" }, "icon": "assets/recorder.png" },
         { "id": "rr-clock", "label": "時計", "x": 13.07, "y": 15.69, "w": 8.08, "h": 12.83, "action": { "type": "modal", "name": "clock" }, "icon": "assets/clock.png" },
