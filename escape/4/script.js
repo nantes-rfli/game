@@ -29,7 +29,7 @@
 
   const MODAL_IMAGE_FALLBACK = {
     drawers: "assets/drawers.png",
-    scale: null,
+    scale: "assets/scale.png",
     desk: "assets/desk.png",
     recorder: "assets/recorder.png",
     clock: "assets/clock.png",
@@ -111,7 +111,7 @@
 
   // 埋め込みフォールバック（fetch失敗時に使用）
   const STATE_FALLBACK = {"version":1,"scene":"record-room","hintLevel":0,"log":[],"inventory":[],"flags":{"hasCloth":false,"hasMirror":false,"hasFlashlight":false,"hasRedFilm":false,"hasTape":false,"hasPlug":false,"windowCleared":false,"readDirectionRuleKnown":false,"tornPaperCombined":false,"scaleSolved":false,"audioDecoded":false,"clockCoordUsed":false,"bottlesSolved":false,"foldSolved":false,"tapeFree":false,"powerOn":false,"heatInkRevealed":false,"ledgerRestored":false,"shelfSorted":false,"directionSolved":false,"doorUnlocked":false,"clockFinalSet":false},"notes":{"windowArrows":null,"stampDate":{"year":2020,"month":6,"day":null},"audioDigits":null,"drawerStart":"07","doorCodeProgress":0,"finalTime":{"hh":6,"mm":20}},"pieces":{"records":{"ki-1":false,"ki-2":false,"ki-3":false,"ki-4":false,"roku-1":false,"roku-2":false,"roku-3":false,"roku-4":false,"ame-1":false,"ame-2":false,"ame-3":false,"ame-4":false,"oto-1":false,"oto-2":false,"oto-3":false,"oto-4":false},"ledgerScraps":{"1":false,"2":false,"3":false},"tornPapers":{"a":false,"b":false},"foldPaper":false},"drawers":{"01":{"opened":false,"taken":false,"lock":{"type":"none"},"contents":["record:ki-1"]},"02":{"opened":false,"taken":false,"lock":{"type":"text","key":"labelFill-1"},"contents":["record:ki-2","torn:b"]},"03":{"opened":false,"taken":false,"lock":{"type":"none"},"contents":["record:roku-1","note:stampDate"]},"04":{"opened":false,"taken":false,"lock":{"type":"code","key":"scaleCode"},"contents":["record:roku-2","paper:fold"]},"05":{"opened":false,"taken":false,"lock":{"type":"none"},"contents":["record:ki-3","item:matchbox"]},"06":{"opened":false,"taken":false,"lock":{"type":"hint","key":"tornCombine"},"contents":["record:ame-1"]},"07":{"opened":false,"taken":false,"lock":{"type":"condition","key":"hasRedFilm"},"contents":["record:ame-2","item:plug"]},"08":{"opened":false,"taken":false,"lock":{"type":"code","key":"audioDigits"},"contents":["record:ame-3","ledger:1"]},"09":{"opened":false,"taken":false,"lock":{"type":"none"},"contents":["record:ame-4"]},"10":{"opened":false,"taken":false,"lock":{"type":"hint","key":"clockCoord"},"contents":["record:oto-1","ledger:2"]},"11":{"opened":false,"taken":false,"lock":{"type":"text","key":"labelFill-2"},"contents":["record:oto-2","note:panelColors"]},"12":{"opened":false,"taken":false,"lock":{"type":"condition","key":"powerOn"},"contents":["record:oto-3","paper:heatInkTarget"]},"13":{"opened":false,"taken":false,"lock":{"type":"none"},"contents":["record:oto-4","ledger:3"]},"14":{"opened":false,"taken":false,"lock":{"type":"code","key":"redFilmCode"},"contents":["record:ki-4","note:redDigitsHowTo"]},"15":{"opened":false,"taken":false,"lock":{"type":"condition","key":"foldSolved"},"contents":["record:roku-3","note:directionStart07"]},"16":{"opened":false,"taken":false,"lock":{"type":"condition","key":"heatInkRevealed"},"contents":["record:roku-4","note:restoreOrderFinal"]}}};
-  const HOTSPOTS_FALLBACK = {"version":1,"scenes":{"record-room":{"background":"assets/record-room.png","fit":"cover","hotspots":[{"id":"rr-drawers","label":"引き出し棚","x":37.69,"y":34.79,"w":35.55,"h":51.33,"action":{"type":"modal","name":"drawers"}},{"id":"rr-scale","label":"秤","x":56.7,"y":24.95,"w":9.51,"h":9.41,"action":{"type":"modal","name":"scale"}},{"id":"rr-desk","label":"机","x":3.18,"y":56.61,"w":34.13,"h":34.93,"action":{"type":"modal","name":"desk"}},{"id":"rr-recorder","label":"レコーダー","x":24.38,"y":47.34,"w":11.5,"h":8.7,"action":{"type":"modal","name":"recorder"}},{"id":"rr-clock","label":"時計","x":13.07,"y":15.69,"w":8.08,"h":12.83,"action":{"type":"modal","name":"clock"}},{"id":"rr-window","label":"窓","x":38.26,"y":13.26,"w":14.83,"h":21.67,"action":{"type":"modal","name":"window"}},{"id":"rr-panel","label":"配電盤","x":26.28,"y":18.96,"w":8.18,"h":12.26,"action":{"type":"modal","name":"panel"}},{"id":"rr-lamp","label":"電気スタンド","x":13.17,"y":37.36,"w":11.6,"h":18.54,"action":{"type":"modal","name":"lamp"}},{"id":"rr-door","label":"扉","x":73.91,"y":13.69,"w":18.35,"h":70.72,"action":{"type":"modal","name":"door"}}]},"hallway":{"background":"assets/hallway.png","fit":"cover","hotspots":[{"id":"hw-coat","label":"コート掛け","x":5.94,"y":20.53,"w":17.59,"h":44.92,"action":{"type":"pickup","item":"flashlight"}},{"id":"hw-board","label":"掲示板","x":68.87,"y":16.11,"w":26.24,"h":43.77,"action":{"type":"modal","name":"board"}},{"id":"hw-lost","label":"落とし物","x":56.61,"y":81.13,"w":6.84,"h":10.27,"action":{"type":"pickup","item":"torn-a"}}]},"storage":{"background":"assets/storage.png","fit":"cover","hotspots":[{"id":"st-bottles","label":"標本瓶","x":5.85,"y":20.82,"w":49.43,"h":24.81,"action":{"type":"modal","name":"bottles"}},{"id":"st-case","label":"小箱","x":26,"y":71.01,"w":19.11,"h":21.39,"action":{"type":"modal","name":"case"}},{"id":"st-tape","label":"テープ","x":56,"y":78,"w":16,"h":10,"action":{"type":"pickup","item":"tape"},"requiresAny":["bottlesSolved","tapeFree"]}]},"washroom":{"background":"assets/washroom.png","fit":"cover","hotspots":[{"id":"wr-cloth","label":"布","x":9.65,"y":25.95,"w":9.13,"h":23.67,"action":{"type":"pickup","item":"cloth"}},{"id":"wr-mirror","label":"鏡","x":22.86,"y":9.84,"w":29.66,"h":29.66,"action":{"type":"pickup","item":"mirror"}},{"id":"wr-sink","label":"洗面台","x":17.82,"y":43.92,"w":34.51,"h":15.97,"action":{"type":"message","key":"wr.sink"}}]}}};
+  const HOTSPOTS_FALLBACK = {"version":1,"scenes":{"record-room":{"background":"assets/record-room.png","backgroundOn":"assets/record-room.png","backgroundOff":"assets/record-room-off.png","fit":"cover","hotspots":[{"id":"rr-drawers","label":"引き出し棚","x":37.69,"y":34.79,"w":35.55,"h":51.33,"action":{"type":"modal","name":"drawers"}},{"id":"rr-scale","label":"秤","x":56.7,"y":24.95,"w":9.51,"h":9.41,"action":{"type":"modal","name":"scale"}},{"id":"rr-desk","label":"机","x":3.18,"y":56.61,"w":34.13,"h":34.93,"action":{"type":"modal","name":"desk"}},{"id":"rr-recorder","label":"レコーダー","x":24.38,"y":47.34,"w":11.5,"h":8.7,"action":{"type":"modal","name":"recorder"}},{"id":"rr-clock","label":"時計","x":13.07,"y":15.69,"w":8.08,"h":12.83,"action":{"type":"modal","name":"clock"}},{"id":"rr-window","label":"窓","x":38.26,"y":13.26,"w":14.83,"h":21.67,"action":{"type":"modal","name":"window"}},{"id":"rr-panel","label":"配電盤","x":26.28,"y":18.96,"w":8.18,"h":12.26,"action":{"type":"modal","name":"panel"}},{"id":"rr-lamp","label":"電気スタンド","x":13.17,"y":37.36,"w":11.6,"h":18.54,"action":{"type":"modal","name":"lamp"}},{"id":"rr-door","label":"扉","x":73.91,"y":13.69,"w":18.35,"h":70.72,"action":{"type":"modal","name":"door"}}]},"hallway":{"background":"assets/hallway.png","fit":"cover","hotspots":[{"id":"hw-coat","label":"コート掛け","x":5.94,"y":20.53,"w":17.59,"h":44.92,"action":{"type":"pickup","item":"flashlight"}},{"id":"hw-board","label":"掲示板","x":68.87,"y":16.11,"w":26.24,"h":43.77,"action":{"type":"modal","name":"board"}},{"id":"hw-lost","label":"落とし物","x":56.61,"y":81.13,"w":6.84,"h":10.27,"action":{"type":"pickup","item":"torn-a"}}]},"storage":{"background":"assets/storage.png","fit":"cover","hotspots":[{"id":"st-bottles","label":"標本瓶","x":5.85,"y":20.82,"w":49.43,"h":24.81,"action":{"type":"modal","name":"bottles"}},{"id":"st-case","label":"小箱","x":26,"y":71.01,"w":19.11,"h":21.39,"action":{"type":"modal","name":"case"}},{"id":"st-tape","label":"テープ","x":56,"y":78,"w":16,"h":10,"action":{"type":"pickup","item":"tape"},"requiresAny":["bottlesSolved","tapeFree"]}]},"washroom":{"background":"assets/washroom.png","fit":"cover","hotspots":[{"id":"wr-cloth","label":"布","x":9.65,"y":25.95,"w":9.13,"h":23.67,"action":{"type":"pickup","item":"cloth"}},{"id":"wr-mirror","label":"鏡","x":22.86,"y":9.84,"w":29.66,"h":29.66,"action":{"type":"pickup","item":"mirror"}},{"id":"wr-sink","label":"洗面台","x":17.82,"y":43.92,"w":34.51,"h":15.97,"action":{"type":"message","key":"wr.sink"}}]}}};
 
   const USE_SYNTH_RAIN = true; // ギャップレスを優先するためデフォルトで合成雨音を使用
 
@@ -304,6 +304,9 @@
   function setFlag(flag, value = true) {
     state.flags[flag] = value;
     saveState();
+    if (flag === "powerOn") {
+      renderStage();
+    }
   }
 
   function unlockAudio() {
@@ -342,10 +345,29 @@
     pushLog(`${sceneNames[sceneId]}へ移動した。`);
   }
 
+  async function resolveSceneBackground(sceneId, powerOn) {
+    const scene = gameData.scenes[sceneId];
+    if (!scene) return null;
+    if (sceneId !== "record-room") return scene.background;
+
+    const preferred = powerOn ? (scene.backgroundOn ?? scene.background) : (scene.backgroundOff ?? scene.background);
+    if (!preferred || preferred === scene.background) return scene.background;
+    if (await hasAsset(preferred)) return preferred;
+    return scene.background;
+  }
+
   function renderStage() {
-    const scene = gameData.scenes[state.scene];
-    stage.style.backgroundImage = `url(${scene.background})`;
+    const sceneId = state.scene;
+    const powerOn = Boolean(state.flags.powerOn);
+    const scene = gameData.scenes[sceneId];
     stage.style.backgroundSize = scene.fit;
+    stage.style.backgroundImage = `url(${scene.background})`;
+    void resolveSceneBackground(sceneId, powerOn).then((background) => {
+      if (!background) return;
+      if (state.scene !== sceneId) return;
+      if (sceneId === "record-room" && Boolean(state.flags.powerOn) !== powerOn) return;
+      stage.style.backgroundImage = `url(${background})`;
+    });
   }
 
   function renderHotspots() {
@@ -585,6 +607,9 @@
 
   function getModalImage(name) {
     const candidates = [];
+    if (name === "scale") {
+      candidates.push("assets/scale.png");
+    }
     if (name === "lamp") {
       candidates.push(state.flags.powerOn ? "assets/lamp-on.png" : "assets/lamp-off.png");
     }

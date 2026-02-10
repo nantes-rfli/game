@@ -3,6 +3,8 @@
   "scenes": {
     "record-room": {
       "background": "assets/record-room.png",
+      "backgroundOn": "assets/record-room.png",
+      "backgroundOff": "assets/record-room-off.png",
       "fit": "cover",
       "hotspots": [
         { "id": "rr-drawers", "label": "引き出し棚", "x": 37.69, "y": 34.79, "w": 35.55, "h": 51.33, "action": { "type": "modal", "name": "drawers" } },
