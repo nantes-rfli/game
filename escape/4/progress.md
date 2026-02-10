@@ -71,3 +71,11 @@ Original prompt: [$develop-web-game](/Users/nanto/.codex/skills/develop-web-game
 
 ## TODO (next)
 - 背景ON/OFFの見え方（暗さ・色味・コントラスト）の最終トーンを必要なら微調整する。
+
+- 2026-02-10: 背景OFFトーンを微調整。
+  - `assets/record-room-off.png` に小幅の明度調整（`brightness-contrast 2x0` 相当）を適用し、暗さを維持しつつ視認性を改善。
+  - 再検証: `WEB_GAME_CLIENT`（`output/web-game/client-tone-tuned`）と `playwright_scenario_suite.mjs`（`output/web-game/suite-tone-tuned`）を実行し、`total=6 passed=6 failed=0`、`errors.json` なしを確認。
+  - 目視確認: `scale-lamp/main-no-hotspot-icons.png` でOFF背景が適用され、ホットスポット小アイコン非表示・ランプOFFモーダル表示が維持されることを確認。
+
+## TODO (next)
+- 実機での最終見え方確認時に、OFF背景がまだ暗すぎる場合は `record-room-off.png` 側を再調整（+1〜+2程度の追加明度）する。
