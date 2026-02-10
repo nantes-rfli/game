@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "scenes": {
+    "record-room": {
+      "background": "assets/record-room.png",
+      "fit": "cover",
+      "hotspots": [
+        { "id": "rr-drawers", "label": "引き出し棚", "x": 37.69, "y": 34.79, "w": 35.55, "h": 51.33, "action": { "type": "modal", "name": "drawers" } },
+        { "id": "rr-scale", "label": "秤", "x": 56.70, "y": 24.95, "w": 9.51, "h": 9.41, "action": { "type": "modal", "name": "scale" }, "icon": "assets/panel.png" },
+        { "id": "rr-desk", "label": "机", "x": 3.18, "y": 56.61, "w": 34.13, "h": 34.93, "action": { "type": "modal", "name": "desk" }, "icon": "assets/desk.png" },
+        { "id": "rr-recorder", "label": "レコーダー", "x": 24.38, "y": 47.34, "w": 11.50, "h": 8.70, "action": { "type": "modal", "name": "recorder" }, "icon": "assets/recorder.png" },
+        { "id": "rr-clock", "label": "時計", "x": 13.07, "y": 15.69, "w": 8.08, "h": 12.83, "action": { "type": "modal", "name": "clock" }, "icon": "assets/clock.png" },
+        { "id": "rr-window", "label": "窓", "x": 38.26, "y": 13.26, "w": 14.83, "h": 21.67, "action": { "type": "modal", "name": "window" }, "icon": "assets/window.png" },
+        { "id": "rr-panel", "label": "配電盤", "x": 26.28, "y": 18.96, "w": 8.18, "h": 12.26, "action": { "type": "modal", "name": "panel" }, "icon": "assets/panel.png" },
+        { "id": "rr-lamp", "label": "電気スタンド", "x": 13.17, "y": 37.36, "w": 11.60, "h": 18.54, "action": { "type": "modal", "name": "lamp" }, "icon": "assets/lamp.png" },
+        { "id": "rr-door", "label": "扉", "x": 73.91, "y": 13.69, "w": 18.35, "h": 70.72, "action": { "type": "modal", "name": "door" }, "icon": "assets/door.png" }
+      ]
+    },
+    "hallway": {
+      "background": "assets/hallway.png",
+      "fit": "cover",
+      "hotspots": [
+        { "id": "hw-coat", "label": "コート掛け", "x": 5.94, "y": 20.53, "w": 17.59, "h": 44.92, "action": { "type": "pickup", "item": "flashlight" }, "icon": "assets/item-flashlight.png" },
+        { "id": "hw-board", "label": "掲示板", "x": 68.87, "y": 16.11, "w": 26.24, "h": 43.77, "action": { "type": "modal", "name": "board" }, "icon": "assets/paper-record-template.png" },
+        { "id": "hw-lost", "label": "落とし物", "x": 56.61, "y": 81.13, "w": 6.84, "h": 10.27, "action": { "type": "pickup", "item": "torn-a" }, "icon": "assets/paper-torn-a.png" }
+      ]
+    },
+    "storage": {
+      "background": "assets/storage.png",
+      "fit": "cover",
+      "hotspots": [
+        { "id": "st-bottles", "label": "標本瓶", "x": 5.85, "y": 20.82, "w": 49.43, "h": 24.81, "action": { "type": "modal", "name": "bottles" }, "icon": "assets/paper-record-template.png" },
+        { "id": "st-case", "label": "小箱", "x": 26.00, "y": 71.01, "w": 19.11, "h": 21.39, "action": { "type": "modal", "name": "case" }, "icon": "assets/item-mirror.png" },
+        { "id": "st-tape", "label": "テープ", "x": 56, "y": 78, "w": 16, "h": 10, "action": { "type": "pickup", "item": "tape" }, "requiresAny": ["bottlesSolved", "tapeFree"], "icon": "assets/item-tape.png" }
+      ]
+    },
+    "washroom": {
+      "background": "assets/washroom.png",
+      "fit": "cover",
+      "hotspots": [
+        { "id": "wr-cloth", "label": "布", "x": 9.65, "y": 25.95, "w": 9.13, "h": 23.67, "action": { "type": "pickup", "item": "cloth" }, "icon": "assets/item-cloth.png" },
+        { "id": "wr-mirror", "label": "鏡", "x": 22.86, "y": 9.84, "w": 29.66, "h": 29.66, "action": { "type": "pickup", "item": "mirror" }, "icon": "assets/item-mirror.png" },
+        { "id": "wr-sink", "label": "洗面台", "x": 17.82, "y": 43.92, "w": 34.51, "h": 15.97, "action": { "type": "message", "key": "wr.sink" }, "icon": "assets/washroom.png" }
+      ]
+    }
+  }
+}

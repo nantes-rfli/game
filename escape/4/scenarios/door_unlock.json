@@ -1,0 +1,14 @@
+{
+  "initialWaitMs": 400,
+  "steps": [
+    { "type": "click", "selector": ".hotspot[aria-label=\"扉\"]" },
+    { "type": "wait", "ms": 80 },
+    { "type": "capture", "name": "door-opened" },
+    { "type": "fill", "selector": ".modal .field input[placeholder=\"814362\"]", "value": "814362" },
+    { "type": "click", "selector": "button:has-text(\"入力\")" },
+    { "type": "wait", "ms": 80 },
+    { "type": "capture", "name": "door-unlocked" },
+    { "type": "assert", "path": "flags.doorUnlocked", "equals": true },
+    { "type": "assert", "path": "notes.doorCodeProgress", "equals": 6 }
+  ]
+}

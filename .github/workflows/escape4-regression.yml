@@ -1,0 +1,64 @@
+name: escape4-regression
+
+on:
+  pull_request:
+    paths:
+      - "escape/4/**"
+      - ".github/workflows/escape4-regression.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "escape/4/**"
+      - ".github/workflows/escape4-regression.yml"
+  workflow_dispatch:
+
+jobs:
+  suite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: npm install playwright --no-save
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Escape 4 Scenario Suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 5173 >/tmp/escape4_server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+
+          for i in {1..40}; do
+            if curl -fsS "http://127.0.0.1:5173/escape/4/" >/dev/null; then
+              break
+            fi
+            sleep 0.25
+          done
+
+          node escape/4/playwright_scenario_suite.mjs \
+            --url "http://127.0.0.1:5173/escape/4/" \
+            --scenarios-file "escape/4/scenarios/suite.json" \
+            --output-dir "output/web-game/suite-ci" \
+            --headless 1
+
+      - name: Upload Regression Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: escape4-regression-artifacts
+          path: |
+            output/web-game/suite-ci/**
+            /tmp/escape4_server.log
+          if-no-files-found: warn

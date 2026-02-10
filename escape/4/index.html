@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>雨音の記録室</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="back-link" href="/escape/">一覧に戻る</a>
+
+    <div class="scene">
+      <header class="title">
+        <p class="subtitle">Rain Archive</p>
+        <h1>雨音の記録室</h1>
+        <p class="tagline">引き出しの記録を整え、止まった時計を進めて脱出せよ。</p>
+        <div class="title-actions">
+          <label class="toggle">
+            <input type="checkbox" id="fx-toggle" />
+            <span>高品質描画</span>
+          </label>
+          <label class="slider">
+            <span>雨音</span>
+            <input type="range" id="rain-volume" min="0" max="100" value="35" />
+          </label>
+          <button class="ghost-btn" type="button" id="restart">リセット</button>
+        </div>
+      </header>
+
+      <main class="room" aria-label="雨音の記録室">
+        <div class="stage" id="stage" aria-label="背景">
+          <div class="hotspots" id="hotspots"></div>
+          <div class="room-message" id="room-message" aria-live="polite" aria-atomic="true"></div>
+        </div>
+
+        <nav class="scene-tabs" aria-label="場所の切り替え">
+          <button class="tab is-active" type="button" data-scene="record-room">記録室</button>
+          <button class="tab" type="button" data-scene="hallway">廊下</button>
+          <button class="tab" type="button" data-scene="storage">保管庫</button>
+          <button class="tab" type="button" data-scene="washroom">洗面</button>
+        </nav>
+      </main>
+
+      <section class="panels" aria-label="情報パネル">
+        <section class="panel inventory" aria-label="インベントリ">
+          <header class="panel-head">
+            <h2>持ち物</h2>
+            <button class="ghost-btn" type="button" id="clear-selection">使用解除</button>
+          </header>
+          <div class="items" id="inventory-items"></div>
+          <p class="empty" id="inventory-empty">持ち物はない</p>
+        </section>
+
+        <section class="panel log" aria-label="ログ">
+          <header class="panel-head">
+            <h2>ログ</h2>
+          </header>
+          <ol class="log-list" id="log-list"></ol>
+        </section>
+
+        <section class="panel hints" aria-label="ヒント">
+          <header class="panel-head">
+            <h2>館内放送（ヒント）</h2>
+          </header>
+          <div class="hint-controls" role="tablist" aria-label="ヒントレベル">
+            <button class="hint-tab is-active" type="button" data-hint-level="0">Lv1</button>
+            <button class="hint-tab" type="button" data-hint-level="1">Lv2</button>
+            <button class="hint-tab" type="button" data-hint-level="2">Lv3</button>
+          </div>
+          <div class="hint-body" id="hint-body">
+            <p class="muted">詰まったら、ヒントレベルを上げてください。</p>
+          </div>
+        </section>
+      </section>
+    </div>
+
+    <div class="modal-root" id="modal-root" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
